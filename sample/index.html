@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>おしゃべり</title>
+</head>
+<body>
+
+<script src='http://cdn.rawgit.com/phi-jp/phina.js/v0.2.0/build/phina.js'></script>
+
+<!-- plugin -->
+<script src='https://cdn.rawgit.com/pentamania/phina-talkbubble/6b04fac6/dist/phina-talkbubble.min.js'></script>
+<script src='../phina-talkcontroller.js'></script>
+<!-- <script src='../phina-fukidashi/dist/phina-talkBubble.js'></script> -->
+
+<!-- main -->
+<script src='./components.js'></script>
+<script src='./MainScene.js'></script>
+
+<script>
+
+/**
+ * main
+ */
+var SCREEN_WIDTH = 480;
+var SCREEN_HEIGHT = 680;
+
+phina.globalize();
+
+phina.main(function() {
+
+  var app = GameApp({
+    startLabel: 'main',
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
+    assets: {
+      text: {
+        mukashibanashi: "./assets/mukashibanashi.csv"
+      },
+    },
+    backgroundColor: "#BDF4C7",
+  });
+
+  app.run();
+});
+
+
+
+</script>
+</body>
+</html>

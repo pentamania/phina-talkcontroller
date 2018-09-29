@@ -1,0 +1,14 @@
+{
+  "name": "phina-talkcontroller",
+  "version": "0.1.0",
+  "description": "phina.js plugin for talking scene",
+  "main": "TalkController.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "phina.js"
+  ],
+  "author": "pentamania",
+  "license": "MIT"
+}

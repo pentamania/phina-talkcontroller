@@ -1,0 +1,11 @@
+// [textAreaId], [textString], [activatedObjectId], [callBackEventId]
+# 行頭にシャープもしくは//をつけるとコメントアウト
+// \nで改行 する
+
+bl_0, 昔々あるところに、, cl, e0
+br_0|bl_0, おっ|yeah, cr|cl
+bl_0, おじいさんと\nおばあさんが, cl
+br_0, うん, cr
+bl_1, いませんでした！, cl
+br_1, いないんかい！！, cr
+mes, 終
