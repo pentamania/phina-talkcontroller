@@ -1,6 +1,6 @@
-# phina-talkController
+# phina-talkcontroller
 
-phina.jsで会話シーンをやってみるテスト
+phina.jsで会話シーンを簡易化するための補助プラグイン
 
 **[サンプル](https://pentamania.github.io/phina-talkcontroller/sample/)**
 
@@ -12,12 +12,12 @@ phina.jsで会話シーンをやってみるテスト
 <html lang="ja">
 <head>
   <meta charset="utf-8">
-  <title>title</title>
+  <title>talkcontroller</title>
 </head>
 <body>
 
-<script src='http://cdn.rawgit.com/phi-jp/phina.js/v0.2.0/build/phina.js'></script>
-<script src='./src/TalkManager.js'></script>
+<script src='https://cdn.rawgit.com/phi-jp/phina.js/v0.2.0/build/phina.js'></script>
+<script src='path/to/phina-talkcontroller.js'></script>
 
 </body>
 </html>
@@ -29,7 +29,7 @@ phina.jsで会話シーンをやってみるテスト
 ```txt
 # [textAreaId], [textString], [reactingObjectId], [callBackEventId]のフォーマットで記述
 # 行頭にシャープもしくは//をつけるとコメントアウト
-// \nで改行 する
+// \nで改行する
 
 ta, これはコーラですか？, cL, evstart
 ta, いいえ、\nそれは醤油です, cR
@@ -52,8 +52,8 @@ var app = phina.game.GameApp({
 app.run();
 ```
 
-### id割り当て
-テキストデータ中のテキストエリアid等と描画オブジェクトとを紐づけ。
+### idの割り当て
+テキストデータ中のテキストエリアid等と描画オブジェクトとを紐づける。
 
 ```js
 phina.define('MainScene', {
@@ -65,15 +65,20 @@ phina.define('MainScene', {
     var gy = this.gridY;
 
     /* キャラクター */
-    var john = phina.display.Sprite("John_image").addChildTo(this);
-    var hanako = phina.display.Sprite("Hanako_image").addChildTo(this);
+    var john = phina.display.Sprite("John_image")
+      .setPosition(gx.span(4), gy.span(8))
+      .addChildTo(this);
+    var hanako = phina.display.Sprite("Hanako_image")
+      .setPosition(gx.span(12), gy.span(8))
+      .addChildTo(this);
 
     /* テキストオブジェクト */
     var textArea = phina.ui.LabelArea()
-      .setPosition(gx.span(6), gy.span(6))
+      .setPosition(gx.span(8), gy.span(4))
       .addChildTo(this);
 
-    var talkManagerOption = {
+    var talkControllerOption = {
+      // テキスト表示オブジェクト：LabelやTextAreaクラスなど
       textAreas: [
         {
           id: "ta", // 識別キー
@@ -104,13 +109,13 @@ phina.define('MainScene', {
       ],
     };
 
-    // TalkManagerには読み込んだテキストデータのキー及びオプションを渡す
-    this.talkManager = TalkManager('serifu', talkManagerOption);
+    // TalkControllerには読み込んだテキストデータのキー名及びオプションを渡す
+    this.talkController = phina.util.TalkController('serifu', talkControllerOption);
 });
 ```
 
-### step
-会話の進行はstepで進める
+### 会話の進行
+TalkController.stepメソッドで進める
 
 ```js
 phina.define('MainScene', {
@@ -123,9 +128,24 @@ phina.define('MainScene', {
     var kb = app.keyboard;
 
     if (p.getPointingStart() || kb.getKeyDown('z')) {
-      this.talkManager.step();
+      this.talkController.step();
     }
   },
 })
 ```
 
+### リアクションさせる
+textAreaオブジェクトやreactiveオブジェクトにtalkActivate(talkDeactivate)を設定すると、
+それぞれアクティブ（非アクティブ）状態になった際にコールバックを実行可能。
+
+```js
+var john = phina.display.Sprite("John_image")
+  .setPosition(gx.span(4), gy.span(8))
+  .addChildTo(this);
+john.talkActivate = function() {
+  john.visible = true;
+};
+john.talkDeactivate = function() {
+  john.visible = false;
+};
+```
