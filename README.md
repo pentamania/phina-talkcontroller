@@ -2,7 +2,7 @@
 
 phina.jsで会話シーンをやってみるテスト
 
-[サンプル](./sample/index.html)
+**[サンプル](https://pentamania.github.io/phina-talkcontroller/sample/)**
 
 ## ライブラリ読み込み
 
